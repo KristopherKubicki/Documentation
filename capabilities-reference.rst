@@ -67,6 +67,7 @@ Commands:
 :ref:`energy_meter`           capability.energyMeter                 - energy
 :ref:`garage_door`            capability.garageDoorControl           - door                                - open()
                                                                                                            - close()
+:ref:`geomagnetic_storm`      capability.geomagneticStorm            - geomagneticStorm
 :ref:`illuminance_mesurmnt`   capability.illuminanceMeasurement      - illuminance
 :ref:`image_capture`          capability.imageCapture                - image                               - take()
 :ref:`lock`                   capability.lock                        - lock                                - lock()
@@ -94,6 +95,7 @@ Commands:
 :ref:`polling`                capability.polling                                                           - poll()
 :ref:`power_meter`            capability.powerMeter                  - power
 :ref:`presence_sensor`        capability.presenceSensor              - presence
+:ref:`radio_blackout`         capability.radioBlackout               - radioBlackout
 :ref:`refresh`                capability.refresh                                                           - refresh()
 :ref:`rel_hmdty_mesurmnt`     capability.relativeHumidityMeasurement - humidity
 :ref:`relay_switch`           capability.relaySwitch                 - switch                              - on()
@@ -105,6 +107,7 @@ Commands:
 
 :ref:`sleep_sensor`           capability.sleepSensor                 - sleeping
 :ref:`smoke_detector`         capability.smokeDetector               - smoke
+:ref:`solar_radiation`        capability.solarRadiationStorm         - solarRadiationStorm
 :ref:`sound_sensor`           capability.soundSensor                 - sound
 :ref:`speech_synthesis`       capability.speechSynthesis                                                   - speak(string)
 :ref:`step_sensor`            capability.stepSensor                  - steps
@@ -882,6 +885,52 @@ door      String  ``"unknown"``
 
 ----
 
+.. _geomagnetic_storm:
+
+Geomagnetic Storm
+-------------------
+
+=========================   ==============================
+Capability Name             SmartApp Preferences Reference
+=========================   ==============================
+Geomagnetic Storm           capability.geomagneticStorm
+=========================   ==============================
+
+**Attributes:**
+
+===================   ======= ===============
+Attribute             Type    Possible Values
+===================   ======= ===============
+geomagneticStorm      Number  ``0-5``
+===================   ======= ===============
+
+**Commands:**
+
+None.
+
+**SmartApp Example:**
+
+.. code-block:: groovy
+
+  preferences {
+    section("Title") {
+      input "geomag", "capability.geomagneticStorm"
+      input "alarm", "capability.alarm"
+    }
+  }
+
+  def installed() {
+    subscribe(geomag, "geomagneticStorm", myHandler)
+  }
+
+  def myHandler(evt) {
+    if (evt.integerValue > 4) {
+      alarm.siren()
+    }
+  }
+
+----
+
 .. _illuminance_mesurmnt:
 
 Illuminance Measurement
@@ -1421,6 +1470,52 @@ None.
 
 ----
 
+.. _radio_blackout:
+
+Radio Blackout
+-------------------
+
+=========================   ==============================
+Capability Name             SmartApp Preferences Reference
+=========================   ==============================
+Radio Blackout              capability.radioBlackout
+=========================   ==============================
+
+**Attributes:**
+
+===================   ======= ===============
+Attribute             Type    Possible Values
+===================   ======= ===============
+radioBlackout         Number  ``0-5``
+===================   ======= ===============
+
+**Commands:**
+
+None.
+
+**SmartApp Example:**
+
+.. code-block:: groovy
+
+  preferences {
+    section("Title") {
+      input "radioblackout", "capability.radioBlackout"
+      input "alarm", "capability.alarm"
+    }
+  }
+
+  def installed() {
+    subscribe(radioblackout, "radioBlackout", myHandler)
+  }
+
+  def myHandler(evt) {
+    if (evt.integerValue > 4) {
+      alarm.siren()
+    }
+  }
+
+----
+
 .. _refresh:
 
 Refresh
@@ -1660,6 +1755,52 @@ None.
   def myHandler(evt) {
     if("detected" == evt.value) {
       // Sound an alarm! Send a SMS! or Change a HUE bulb color
+    }
+  }
+
+----
+
+.. _solar_radiation:
+
+Solar Radiation
+-------------------
+
+=========================   ==============================
+Capability Name             SmartApp Preferences Reference
+=========================   ==============================
+Solar Radiation             capability.solarRadiationStorm
+=========================   ==============================
+
+**Attributes:**
+
+===================   ======= ===============
+Attribute             Type    Possible Values
+===================   ======= ===============
+solarRadiationStorm   Number  ``0-5``
+===================   ======= ===============
+
+**Commands:**
+
+None.
+
+**SmartApp Example:**
+
+.. code-block:: groovy
+
+  preferences {
+    section("Title") {
+      input "solarrad", "capability.solarRadiationStorm"
+      input "alarm", "capability.alarm"
+    }
+  }
+
+  def installed() {
+    subscribe(solarrad, "solarRadiationStorm", myHandler)
+  }
+
+  def myHandler(evt) {
+    if (evt.integerValue > 4) {
+      alarm.siren()
     }
   }
 
